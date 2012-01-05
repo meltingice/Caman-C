@@ -1,4 +1,4 @@
-OBJ = caman-cli.o caman.o
+OBJ = caman-cli.o caman.o filters.o render.o
 PRGNAME = caman-cli
 
 # Colors
@@ -21,8 +21,10 @@ all: caman-cli
 	cp caman-cli ../bin/
 
 # Deps (generated with `make dep`)
-caman-cli.o: caman-cli.c caman.h
-caman.o: caman.c caman.h
+caman-cli.o: caman-cli.c caman.h filters.h render.h
+caman.o: caman.c caman.h filters.h render.h
+filters.o: filters.c caman.h filters.h render.h
+render.o: render.c caman.h filters.h render.h
 
 dep:
 	$(CC) -MM *.c
@@ -34,6 +36,12 @@ caman-cli.o: caman-cli.c
 	$(QUIET_CC)$(CC) `Wand-config --cflags --cppflags` -c $(CFLAGS) $(COMPILE_TIME) $<
 
 caman.o: caman.c
+	$(QUIET_CC)$(CC) `Wand-config --cflags --cppflags` -c $(CFLAGS) $(COMPILE_TIME) $<
+
+filters.o: filters.c
+	$(QUIET_CC)$(CC) `Wand-config --cflags --cppflags` -c $(CFLAGS) $(COMPILE_TIME) $<
+
+render.o: render.c
 	$(QUIET_CC)$(CC) `Wand-config --cflags --cppflags` -c $(CFLAGS) $(COMPILE_TIME) $<
 	
 clean:
