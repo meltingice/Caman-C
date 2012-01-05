@@ -19,11 +19,29 @@ CamanInstance NewCamanFromFile(char *filename) {
 	status = MagickReadImage(caman->image, filename);
 	if (status == MagickFalse)
 		ThrowWandException(caman->image);
+		
+	loadPixelIterator(caman);
+	
+	// TEMP TEMP TEMP
+	status = MagickWriteImages(caman->image, "./output.jpg", MagickTrue);
+	if (status == MagickFalse)
+		ThrowWandException(caman->image);
+		
+	destroyCamanInstance(caman);
+	MagickWandTerminus();
+	
+	return 0;
 }
 
 CamanInstance NewCamanInstance() {
 	CamanInstance inst = (CamanInstance) malloc(sizeof(CamanInstance *));
 	return inst;
+}
+
+void loadPixelIterator(CamanInstance caman) {
+	caman->iterator = NewPixelIterator(caman->image);
+	if (caman->iterator == (PixelIterator *) NULL)
+		ThrowWandException(caman->image);
 }
 
 void destroyCamanInstance(CamanInstance inst) {
@@ -37,7 +55,7 @@ void destroyCamanInstance(CamanInstance inst) {
 
 /* =============== Exception handling =============== */
 
-void ThrowWandException(MagickWand wand) {
+void ThrowWandException(MagickWand *wand) {
 	char *description;
 	ExceptionType severity;
 	

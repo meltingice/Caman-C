@@ -14,7 +14,10 @@ typedef struct caman *CamanInstance;
 /* Function prototypes */
 CamanInstance NewCamanFromFile(char *);
 CamanInstance NewCamanInstance(void);
+void loadPixelIterator(CamanInstance);
+void destroyCamanInstance(CamanInstance);
 
+/* Exception handlers */
 void ThrowWandException(MagickWand *);
 
 #endif
