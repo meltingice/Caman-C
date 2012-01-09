@@ -25,31 +25,26 @@ void camanProcessFilter(CamanInstance caman, double adjust,
 			break;
 
 		for (x = 0; x < (long) width; x++) {
-			pixel->red = (CamanColor)(PixelGetRedQuantum(pixels[x]) / (CamanColor) QuantumRange);
-			pixel->green =  (CamanColor)(PixelGetGreenQuantum(pixels[x]) / (CamanColor)QuantumRange);
-			pixel->blue = (CamanColor)(PixelGetBlueQuantum(pixels[x]) / (CamanColor) QuantumRange);
-
-			pixel->red *= 255.0;
-			pixel->green *= 255.0;
-			pixel->blue *= 255.0;
+			pixel->red = PixelGetRed(pixels[x]) * 255;
+			pixel->green = PixelGetGreen(pixels[x]) * 255;
+			pixel->blue = PixelGetBlue(pixels[x]) * 255;
 
 			printf("Before: %f %f %f\n", pixel->red, pixel->green, pixel->blue);
 			filter(pixel, adjust);
 			clampRGBA(pixel);
-			//printf("After: %f %f %f\n", pixel->red, pixel->green, pixel->blue);
-			printf("After: %d %d %d\n", getCamanColorQuantum(pixel->red), getCamanColorQuantum(pixel->green), getCamanColorQuantum(pixel->blue));
+			printf("After: %f %f %f\n", pixel->red, pixel->green, pixel->blue);
 
-			PixelSetRedQuantum(pixels[x], getCamanColorQuantum(pixel->red));
-			PixelSetGreenQuantum(pixels[x], getCamanColorQuantum(pixel->green));
-			PixelSetBlueQuantum(pixels[x], getCamanColorQuantum(pixel->blue));
+			PixelSetRed(pixels[x], getCamanColorNormalized(pixel->red));
+			PixelSetGreen(pixels[x], getCamanColorNormalized(pixel->green));
+			PixelSetBlue(pixels[x], getCamanColorNormalized(pixel->blue));
 		}
-
+		
 		PixelSyncIterator(iterator);
 	}
 
 	DestroyPixelIterator(iterator);
 
-	//free(pixel);
+	free(pixel);
 }
 
 void clampRGBA(CamanRGBA pixel) {
@@ -61,9 +56,9 @@ void clampRGBA(CamanRGBA pixel) {
 	if (pixel->blue > 255) pixel->blue = 255;
 }
 
-Quantum getCamanColorQuantum(CamanColor color) {
+double getCamanColorNormalized(CamanColor color) {
 	if (color < 0) return 0;
-	if (color > 255) return QuantumRange;
+	if (color > 255) return 1.0;
 
-	return (Quantum)((color / 255) * (CamanColor) QuantumRange);
+	return color / 255;
 }

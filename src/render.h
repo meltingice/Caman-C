@@ -4,6 +4,6 @@
 /* Function prototypes */
 void camanProcessFilter(CamanInstance, double, void (*filter)(CamanRGBA, CamanColor));
 void clampRGBA(CamanRGBA);
-Quantum getCamanColorQuantum(CamanColor);
+double getCamanColorNormalized(CamanColor);
 
 #endif
