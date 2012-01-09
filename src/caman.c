@@ -32,7 +32,6 @@ CamanInstance NewCamanInstance() {
  */
 void destroyCamanInstance(CamanInstance inst) {
 	// MagickWand allocations
-	DestroyPixelIterator(inst->iterator);
 	DestroyMagickWand(inst->image);
 	
 	// The struct itself
@@ -55,14 +54,6 @@ void CamanInitialize() {
 
 void CamanFinish() {
 	MagickWandTerminus();
-}
-
-/* =============== Internal functions =============== */
-
-void loadCamanPixelIterator(CamanInstance caman) {
-	caman->iterator = NewPixelIterator(caman->image);
-	if (caman->iterator == (PixelIterator *) NULL)
-		ThrowWandException(caman->image);
 }
 
 /* =============== Exception handling =============== */

@@ -4,14 +4,21 @@
 #include <wand/MagickWand.h>
 
 typedef MagickBooleanType CamanBoolean;
-typedef MagickPixelPacket CamanPixel;
+typedef double CamanColor;
 
 /* Struct definitions */
 struct caman {
 	MagickWand *image;
-	PixelIterator *iterator;
 };
+
+struct camanrgba {
+	CamanColor red;
+	CamanColor green;
+	CamanColor blue;
+};
+
 typedef struct caman *CamanInstance;
+typedef struct camanrgba *CamanRGBA;
 
 #include "filters.h"
 #include "render.h"

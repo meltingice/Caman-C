@@ -33,16 +33,16 @@ caman-cli: $(OBJ)
 	$(QUIET_LINK)$(CC) `Wand-config --ldflags --libs` -o $(PRGNAME) $(CCOPT) $(OBJ) $(CCLINK)
 	
 caman-cli.o: caman-cli.c
-	$(QUIET_CC)$(CC) `Wand-config --cflags --cppflags` -c $(CFLAGS) $(COMPILE_TIME) $<
+	$(QUIET_CC)$(CC) -g `Wand-config --cflags --cppflags` -c $(CFLAGS) $(COMPILE_TIME) $<
 
 caman.o: caman.c
-	$(QUIET_CC)$(CC) `Wand-config --cflags --cppflags` -c $(CFLAGS) $(COMPILE_TIME) $<
+	$(QUIET_CC)$(CC) -g `Wand-config --cflags --cppflags` -c $(CFLAGS) $(COMPILE_TIME) $<
 
 filters.o: filters.c
-	$(QUIET_CC)$(CC) `Wand-config --cflags --cppflags` -c $(CFLAGS) $(COMPILE_TIME) $<
+	$(QUIET_CC)$(CC) -g `Wand-config --cflags --cppflags` -c $(CFLAGS) $(COMPILE_TIME) $<
 
 render.o: render.c
-	$(QUIET_CC)$(CC) `Wand-config --cflags --cppflags` -c $(CFLAGS) $(COMPILE_TIME) $<
+	$(QUIET_CC)$(CC) -g `Wand-config --cflags --cppflags` -c $(CFLAGS) $(COMPILE_TIME) $<
 	
 clean:
 	rm *.o caman-cli

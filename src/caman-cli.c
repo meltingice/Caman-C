@@ -9,7 +9,7 @@ int main(int argc, char **argv) {
 	CamanInitialize();
 	
 	CamanInstance caman = NewCamanFromFile(argv[1]);
-	brightness(caman, 5.0);
+	brightness(caman, 50);
 
 	writeCamanToFile(caman, "./output.jpg");
 	
